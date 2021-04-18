@@ -1,6 +1,6 @@
 {
    "prefix": "enter your bot prefix",
-   "token": "enter your bot token",
+   "botToken": "enter your bot token",
    "activity": "Enter the activity that you desire your bot to display as the bot's status",
    "activityType": "Enter either WATCHING, PLAYING, LISTENING, STREAMING"
 }
