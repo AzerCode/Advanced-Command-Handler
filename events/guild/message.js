@@ -1,34 +1,9 @@
 const cooldowns = new Map();
-const profileModel = require("../../database/models/profileSchema");
-const config = require("../../configs/config.json");
-const emoji = require("../../configs/emotes.json");
+const config = require("../config.json");
 
 module.exports = async (Discord, client, message) => {
-    const prefix = `>`;
+    const prefix = config.prefix;
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-    let profileData;
-    try {
-        profileData = await profileModel.findOne({ userID: message.author.id });
-        if (!profileData) {
-            let profile = await profileModel.create({
-                userID: message.author.id,
-                serverID: message.guild.id,
-                coins: 1000,
-                bank: 0,
-                bankFree: 1,
-                bankBronze: 0,
-                bankSilver: 0,
-                bankGold: 0,
-                bankPlatinum: 0,
-                bankExotic: 0,
-
-             });
-             profile.save();
-        }
-    } catch(err) {
-        console.log(err)
-    }
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
@@ -149,23 +124,3 @@ module.exports = async (Discord, client, message) => {
             command.execute(client, message, args, cmd, Discord, profileData);
         }
     }
-
-    // if (command) command.execute(client, message, args, Discord, profileData);
-};
-
-    // if (command) {
-    //     const db = require("../../models/command");
-    //     const check = await db.findOne({ Guild: message.guild.id })
-    //     if (check) {
-    //         if (check.Cmds.includes(command.name)) return message.reply(`huh`);
-    //     } else {
-    //         if (command.guildOnly && message.channel.type === 'dm') {
-    //             return;
-    //         }
-        
-    //         if (command.ownerOnly && message.author.id != '741529029307531325') {
-    //             return;
-    //         }
-    //         command.execute(client, message, args, Discord, profileData);
-    //     }
-    // }
